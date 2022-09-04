@@ -13,7 +13,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message, state: FSMContext):
-    # await db.drop_users()
+    await db.drop_users()
     try:
         user = await db.select_user(telegram_id=message.from_user.id)
     except:
@@ -58,13 +58,26 @@ async def addname(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(list(lang.keys())),state = "language", content_types=types.ContentType.TEXT)
 async def addlanguage(message: types.Message, state: FSMContext):
     user_language=lang[message.text]
+    
+    contact = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='☎️Telefon raqamni yuborish',request_contact=True)
+            
+        ],
+    ],
+    resize_keyboard=True,
+)
+    
     await state.set_state('phone_number')
     await state.update_data({"language": user_language})
-    await message.answer("Telefon raqamingizni kiriting./Masalan: +9981234567",reply_markup=ReplyKeyboardRemove())
+    
+    await message.answer("Telefon raqamingizni kiriting./Masalan: +9981234567",reply_markup=contact)
 
-@dp.message_handler(Regexp(PhoneRegx),state='phone_number')
+@dp.message_handler(state='phone_number',content_types='contact')
 async def addpassword(message: types.Message, state: FSMContext):
-    phone_number = message.text
+    # print()
+    phone_number = message.contact['phone_number']
     await state.update_data({"phone_number": phone_number})
     await state.set_state('address')
     address =  ReplyKeyboardMarkup(row_width=2)
