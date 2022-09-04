@@ -43,7 +43,10 @@ class Database:
         CREATE TABLE IF NOT EXISTS Users (
         id SERIAL PRIMARY KEY,
         full_name VARCHAR(255) NOT NULL,
+        phone_number VARCHAR(13) NOT NULL,
+        myaddress VARCHAR(50) NOT NULL,
         username varchar(255) NULL,
+        mylanguage varchar(2) NOT NULL,
         telegram_id BIGINT NOT NULL UNIQUE 
         );
         """
@@ -57,9 +60,9 @@ class Database:
         ])
         return sql, tuple(parameters.values())
 
-    async def add_user(self, full_name, username, telegram_id):
-        sql = "INSERT INTO users (full_name, username, telegram_id) VALUES($1, $2, $3) returning *"
-        return await self.execute(sql, full_name, username, telegram_id, fetchrow=True)
+    async def add_user(self, full_name,mylanguage, username, telegram_id,phone_number,myaddress):
+        sql = "INSERT INTO users (full_name,mylanguage, username, telegram_id, phone_number, myaddress) VALUES($1, $2, $3, $4, $5,$6) returning *"
+        return await self.execute(sql, full_name,mylanguage, username, telegram_id,phone_number,myaddress, fetchrow=True)
 
     async def select_all_users(self):
         sql = "SELECT * FROM Users"
