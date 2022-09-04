@@ -72,7 +72,7 @@ async def addlanguage(message: types.Message, state: FSMContext):
     await state.set_state('phone_number')
     await state.update_data({"language": user_language})
     
-    await message.answer("Telefon raqamingizni kiriting./Masalan: +9981234567",reply_markup=contact)
+    await message.answer("Telefon raqamingizni yuboring.",reply_markup=contact)
 
 @dp.message_handler(state='phone_number',content_types='contact')
 async def addpassword(message: types.Message, state: FSMContext):
