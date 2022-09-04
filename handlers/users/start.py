@@ -13,7 +13,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message, state: FSMContext):
-    await db.drop_users()
+    # await db.drop_users()
     try:
         user = await db.select_user(telegram_id=message.from_user.id)
     except:
