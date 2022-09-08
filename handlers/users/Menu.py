@@ -17,7 +17,7 @@ def shop_markup(category):
     return markup
 
 
-@dp.message_handler(text='🛍 Mahsulotlar',state=None)
+@dp.message_handler(text='🛍 Buyurtma berish',state=None)
 async def bot_categories(message: types.Message, state: FSMContext):    
     category = await db.get_categories()
     await state.set_state("category")
