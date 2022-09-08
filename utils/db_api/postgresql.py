@@ -166,7 +166,7 @@ class Database:
         CREATE TABLE IF NOT EXISTS Bskts (
         id SERIAL PRIMARY KEY,
 
-        item_id VARCHAR(50) NOT NULL UNIQUE,
+        item_id VARCHAR(50) NOT NULL,
         user_id BIGINT NOT NULL,
         product_count INT DEFAULT 1
         );
