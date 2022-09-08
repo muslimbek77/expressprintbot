@@ -71,11 +71,13 @@ async def basket_actions(call: types.CallbackQuery, callback_data: dict, state: 
                 await db.del_count(user_id=user_id,item_id=item_id)
                 continue
             a+=f'{name}\n{product[5]} x {pr_count} = {product[5]*pr_count}\n\n'
+            jami=jami+product[5]*pr_count
 
             inline_markup.add(InlineKeyboardButton(text=name, callback_data="1"), 
             InlineKeyboardButton(text="-", callback_data=basket_item_action.new(item_action="minus", product=i[1])), 
             InlineKeyboardButton(text="+", callback_data=basket_item_action.new(item_action="plus", product=i[1])), 
             InlineKeyboardButton(text="x", callback_data=basket_item_action.new(item_action="delete", product=i[1])))
+        a=a+f'Jami: {jami} so\'m'
         inline_markup.add(InlineKeyboardButton(text="Buyurtma berish!", callback_data=basket_item_action.new(item_action="order",product=i[1])))
 
         if a=='':
