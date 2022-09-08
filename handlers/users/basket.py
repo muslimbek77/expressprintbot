@@ -62,6 +62,7 @@ async def basket_actions(call: types.CallbackQuery, callback_data: dict, state: 
     inline_markup = InlineKeyboardMarkup(row_width=4)
     if idw:
         a=''
+        jami=0
         for i in idw:
             product = await db.product_for_basket(item_id=i[1])
             print(product)
