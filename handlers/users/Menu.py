@@ -1,3 +1,4 @@
+from email import message
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton,InlineKeyboardButton,ReplyKeyboardRemove
@@ -96,18 +97,21 @@ async def product(message: types.Message, state: FSMContext):
 @dp.callback_query_handler(buy_item.filter(),state=['product','find'])
 async def buy(call: types.CallbackQuery, callback_data: dict):
     item_id=callback_data.get("item_id")
-    try:
+    p = await db.get_bskts_where(call.from_user.id,item_id)
+    if p:
+        await call.answer('Mahsulot savatchaga qo\'shilgan')
+        await call.message.delete()
+
+    else:
         await db.add_basket(
             user_id=call.from_user.id,
             item_id=item_id,
             product_count=1
         )
         
-        await call.answer('Mahsulot korzinkaga qo\'shildi')
+        await call.answer('Mahsulot savatchaga qo\'shildi')
         await call.message.delete()
-    except:
-        await call.answer('Mahsulot korzinkaga qo\'shilgan')
-        await call.message.delete()
+
 
 
 @dp.callback_query_handler(del_item.filter(),state=['product','find'])
