@@ -11,8 +11,8 @@ def shop_markup(category):
     for i in category:
         i=i[0]
         markup.insert(KeyboardButton(text=f"{i}")) 
-    markup.row(KeyboardButton(text='ortga')) 
-    markup.row(KeyboardButton(text='asosiy menu'))
+    markup.row(KeyboardButton(text='🔙 ortga')) 
+    markup.row(KeyboardButton(text='🔙 Asosiy menyuga'))
         
     return markup
 
@@ -25,7 +25,7 @@ async def bot_categories(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state='category',)
 async def product(message: types.Message, state: FSMContext):
-    if message.text =='ortga' or message.text =='asosiy menu':
+    if message.text =='🔙 ortga' or message.text =='🔙 Asosiy menyuga':
         await state.finish()
         await message.answer(text='Menu',reply_markup=menu)
     else:
@@ -40,10 +40,10 @@ async def product(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state='subcategory',)
 async def product(message: types.Message, state: FSMContext):
-    if message.text =='asosiy menu':
+    if message.text =='🔙 Asosiy menyuga':
         await state.finish()
         await message.answer(text='Menu',reply_markup=menu)
-    elif message.text =='ortga':
+    elif message.text =='🔙 ortga':
             await state.set_state("category")
             category = await db.get_categories()
             await message.answer(text='Kategoriyani tanlang.',reply_markup=shop_markup(category))
@@ -60,10 +60,10 @@ async def product(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state='product')
 async def product(message: types.Message, state: FSMContext):
-    if message.text =='asosiy menu':
+    if message.text =='🔙 Asosiy menyuga':
         await state.finish()
         await message.answer(text='Menu',reply_markup=menu)
-    elif message.text =='ortga':
+    elif message.text =='🔙 ortga':
         
         data = await state.get_data()
         category = data.get("category")
@@ -128,7 +128,7 @@ async def find_product(message: types.Message, state: FSMContext):
     menus = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="asosiy menu"),
+            KeyboardButton(text="🔙 Asosiy menyuga"),
         ],
     ],
     resize_keyboard=True,
@@ -138,7 +138,7 @@ async def find_product(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state='find')
 async def product_find(message: types.Message, state: FSMContext):
-    if message.text =='asosiy menu':
+    if message.text =='🔙 Asosiy menyuga':
         await state.finish()
         await message.answer(text='Menu',reply_markup=menu)
     product = await db.product_for_basket(item_id=message.text)
