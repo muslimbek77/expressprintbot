@@ -19,6 +19,7 @@ async def show_bascket(message: types.Message):
     print(idw)
     idw.sort()
     inline_markup = InlineKeyboardMarkup(row_width=4)
+    jami=0
     for i in idw:
         try:
             product = await db.product_for_basket(item_id=i[1])
@@ -27,12 +28,14 @@ async def show_bascket(message: types.Message):
         
         name = product[3]
         pr_count = await db.get_count(user_id,i[1])
-        a+=f'{name}\n{product[5]} x {pr_count} = {product[5]*pr_count}\n\n'
+        jami=jami+product[5]*pr_count
+        a+=f'{name}\n{product[5]} so\'m x {pr_count} = {product[5]*pr_count} so\'m\n\n'
 
         inline_markup.add(InlineKeyboardButton(text=name, callback_data="1"), 
         InlineKeyboardButton(text="-", callback_data=basket_item_action.new(item_action="minus", product=i[1])), 
         InlineKeyboardButton(text="+", callback_data=basket_item_action.new(item_action="plus", product=i[1])), 
         InlineKeyboardButton(text="x", callback_data=basket_item_action.new(item_action="delete", product=i[1]))),
+    a=a+f'Jami: {jami} so\'m'
     inline_markup.add(InlineKeyboardButton(text="Buyurtma berish!", callback_data=basket_item_action.new(item_action="order",product='')))
     if a=='':
         await message.answer(text='mahsulot yo\'q', reply_markup=menu)

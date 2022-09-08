@@ -80,7 +80,7 @@ async def product(message: types.Message, state: FSMContext):
         print(product)
         photo = product[4]
         item_id = product[0]
-        caption=f"{product[3]}\n{product[6]}\n{product[5]}"
+        caption=f"Nomi: {product[3]}\n{product[6]}\n narxi: {product[5]} so'm"
         markup = buy_item_inline(item_id)
         print("ADMINS",ADMINS)
         print(message.from_user.id)
