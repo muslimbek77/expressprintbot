@@ -12,7 +12,7 @@ async def on_startup(dispatcher):
     await db.create_table_users()
     await db.create_table_products()
     await db.create_table_basket()
-    await db.drop_basket()
+    # await db.drop_basket()
 
     # Birlamchi komandalar (/star va /help)
     await set_default_commands(dispatcher)
