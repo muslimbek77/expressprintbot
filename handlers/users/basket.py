@@ -29,7 +29,7 @@ async def show_bascket(message: types.Message):
         name = product[3]
         pr_count = await db.get_count(user_id,i[1])
         jami=jami+product[5]*pr_count
-        a+=f'{name}\n{product[5]} so\'m x {pr_count} = {product[5]*pr_count} so\'m\n\n'
+        a+=f'Nomi: {name}\n{product[5]} so\'m x {pr_count} = {product[5]*pr_count} so\'m\n\n'
 
         inline_markup.add(InlineKeyboardButton(text=name, callback_data="1"), 
         InlineKeyboardButton(text="-", callback_data=basket_item_action.new(item_action="minus", product=i[1])), 
@@ -70,7 +70,7 @@ async def basket_actions(call: types.CallbackQuery, callback_data: dict, state: 
             if pr_count==0:
                 await db.del_count(user_id=user_id,item_id=item_id)
                 continue
-            a+=f'{name}\n{product[5]} x {pr_count} = {product[5]*pr_count}\n\n'
+            a+=f'Nomi: {name}\n{product[5]} so\'m x {pr_count} = {product[5]*pr_count} so\'m\n\n'
             jami=jami+product[5]*pr_count
 
             inline_markup.add(InlineKeyboardButton(text=name, callback_data="1"), 
