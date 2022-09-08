@@ -35,9 +35,10 @@ async def show_bascket(message: types.Message):
         InlineKeyboardButton(text="-", callback_data=basket_item_action.new(item_action="minus", product=i[1])), 
         InlineKeyboardButton(text="+", callback_data=basket_item_action.new(item_action="plus", product=i[1])), 
         InlineKeyboardButton(text="x", callback_data=basket_item_action.new(item_action="delete", product=i[1]))),
+    b=a
     a=a+f'Jami: {jami} so\'m'
     inline_markup.add(InlineKeyboardButton(text="Buyurtma berish!", callback_data=basket_item_action.new(item_action="order",product='')))
-    if a=='':
+    if b=='':
         await message.answer(text='mahsulot yo\'q', reply_markup=menu)
     else:
         await message.answer(a, reply_markup=inline_markup)
@@ -78,10 +79,11 @@ async def basket_actions(call: types.CallbackQuery, callback_data: dict, state: 
             InlineKeyboardButton(text="-", callback_data=basket_item_action.new(item_action="minus", product=i[1])), 
             InlineKeyboardButton(text="+", callback_data=basket_item_action.new(item_action="plus", product=i[1])), 
             InlineKeyboardButton(text="x", callback_data=basket_item_action.new(item_action="delete", product=i[1])))
+        b=a
         a=a+f'Jami: {jami} so\'m'
         inline_markup.add(InlineKeyboardButton(text="Buyurtma berish!", callback_data=basket_item_action.new(item_action="order",product=i[1])))
 
-        if a=='':
+        if b=='':
             await call.message.delete()
             await call.message.answer(text='mahsulot yo\'q', reply_markup=menu)     
         else: 
